@@ -1,36 +1,32 @@
-from selenium import webdriver
-from selenium.webdriver.common.by import By
-import pandas as pd
+import numpy as np
 import matplotlib.pyplot as plt
 
+# Параметры нормального распределения
+mean = 0  # Среднее значение
+std_dev = 1  # Стандартное отклонение
+num_samples = 1000  # Количество образцов
 
-from selenium.webdriver.chrome.service import Service
-import time
+# Генерация случайных чисел, распределенных по нормальному распределению
+data = np.random.normal(mean, std_dev, num_samples)
 
-# Импортируем модуль CSV
-import csv
+# Построение гистограммы
+plt.figure(figsize=(10, 5))
+plt.hist(data, bins=30, alpha=0.7, color='blue', edgecolor='black')
+plt.title('Гистограмма для данных, распределенных по нормальному закону')
+plt.xlabel('Значение')
+plt.ylabel('Частота')
+plt.grid(True)
+plt.show()
 
-driver = webdriver.Chrome()
-# URL страницы
-url = 'https://www.divan.ru/category/stoly-i-stulya'
+# Генерация двух наборов случайных чисел для диаграммы рассеяния
+x = np.random.rand(100)  # массив из 100 случайных чисел для оси X
+y = np.random.rand(100)  # массив из 100 случайных чисел для оси Y
 
-# Открытие страницы
-driver.get(url)
-
-time.sleep(5)
-
-# Парсинг цен
-#prices = driver.find_elements(By.XPATH, "//span[@data-mark='MainPrice']/span")
-prices = driver.find_elements(By.CSS_SELECTOR, 'span.ui-LD-ZU.KIkOH')
-#prices = driver.find_elements(By.XPATH, "//span.ui-LD-ZU.Mtl24.pjHOU")
-# Открытие CSV файла для записи
-with open('prices.csv', mode='w', newline='', encoding='utf-8') as file:
- writer = csv.writer(file)
- writer.writerow(['Price'])  # Записываем заголовок столбца
-
- # Записываем цены в CSV файл
- for price in prices:
-  writer.writerow([price.text])
-
-# Закрытие драйвера
-driver.quit()
+# Построение диаграммы рассеяния
+plt.figure(figsize=(10, 5))
+plt.scatter(x, y, alpha=0.7, color='red', edgecolor='black')
+plt.title('Диаграмма рассеяния для случайных данных')
+plt.xlabel('X')
+plt.ylabel('Y')
+plt.grid(True)
+plt.show()
